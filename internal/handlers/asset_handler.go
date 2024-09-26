@@ -72,7 +72,7 @@ func (h *AssetHandler) Update(c *gin.Context) {
 		return
 	}
 
-	asset.AssetID = uint(id)
+	asset.AssetId = uint(id)
 	if err := h.repo.Update(&asset); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update asset"})
 		return
@@ -103,7 +103,7 @@ func (h *AssetHandler) GetByUserID(c *gin.Context) {
 		return
 	}
 
-	assets, err := h.repo.GetByUserID(uint(userID))
+	assets, err := h.repo.GetAssetsByUserID(uint(userID))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve assets"})
 		return
@@ -119,24 +119,11 @@ func (h *AssetHandler) GetAssetsByUser(c *gin.Context) {
 		return
 	}
 
-	assets, err := h.repo.GetByUserID(uint(userID))
+	assets, err := h.repo.GetAssetsByUserID(uint(userID))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve assets"})
 		return
 	}
 
-	var simplifiedAssets []gin.H
-	if len(assets) == 0 {
-		c.JSON(http.StatusOK, []gin.H{})
-		return
-	}
-
-	for _, asset := range assets {
-		simplifiedAssets = append(simplifiedAssets, gin.H{
-			"asset_id":      asset.AssetID,
-			"asset_type_id": asset.AssetTypeID,
-			"name":          asset.Name,
-		})
-	}
-	c.JSON(http.StatusOK, simplifiedAssets)
+	c.JSON(http.StatusOK, assets)
 }

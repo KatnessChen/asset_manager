@@ -39,8 +39,11 @@ func (r *AssetRepository) Delete(id uint) error {
 	return r.db.Delete(&models.Asset{}, id).Error
 }
 
-func (r *AssetRepository) GetByUserID(userID uint) ([]models.Asset, error) {
+func (r *AssetRepository) GetAssetsByUserID(userID uint) ([]models.Asset, error) {
 	var assets []models.Asset
-	err := r.db.Model(&models.Asset{}).Where(&models.Asset{UserID: userID}).Find(&assets).Error
+	err := r.db.Model(&models.Asset{}).
+							Where(&models.Asset{UserId: userID}).
+							Preload("AssetRecords").
+							Find(&assets).Error
 	return assets, err
 }

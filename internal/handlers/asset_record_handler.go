@@ -81,7 +81,7 @@ func (h *AssetRecordHandler) Update(c *gin.Context) {
 		return
 	}
 
-	record.RecordID = uint(id)
+	record.RecordId = uint(id)
 	if err := h.repo.Update(&record); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update asset record"})
 		return

@@ -71,7 +71,7 @@ func (h *AssetTypeHandler) Update(c *gin.Context) {
 		return
 	}
 
-	assetType.AssetTypeID = uint(id)
+	assetType.AssetTypeId = uint(id)
 	if err := h.repo.Update(&assetType); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update asset type"})
 		return

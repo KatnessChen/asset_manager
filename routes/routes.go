@@ -23,8 +23,7 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 
 	// User routes
 	r.GET("/users/:id", userHandler.GetUserByID)
-	r.GET("/users/:id/assets-records/latest", userHandler.GetLatestAssetRecords)
-	r.GET("/users/:id/assets", assetHandler.GetAssetsByUser) // Updated this line
+	r.GET("/users/:id/assets", assetHandler.GetAssetsByUser)
 
 	// Asset Type routes
 	r.GET("/asset-types", assetTypeHandler.GetAll)
